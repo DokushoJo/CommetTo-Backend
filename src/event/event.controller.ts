@@ -60,4 +60,5 @@ export {
     handleGetAllEventsInfo,
     handleFindGroupsByUser,
     handleFindUsersByGroup,
+    handleMakeGroup,
 }
