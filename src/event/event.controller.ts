@@ -59,5 +59,6 @@ export {
     handleDeleteOneEvent,
     handleGetAllEventsInfo,
     handleFindGroupsByUser,
-    handleFindUsersByGroup
+    handleFindUsersByGroup,
+    handleMakeGroup,
 }
