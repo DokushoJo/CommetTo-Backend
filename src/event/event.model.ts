@@ -55,7 +55,7 @@ async function findGroupsByUser(user_id: string) {
     return groups;
 }
 
-async function findUsersByGroup(group_id: number) : Promise<group | void>{
+async function findUsersByGroup(group_id: number) : Promise<group>{
     const userObj: userInGroup[] = await database("invitations")
     .select("user_id", "accepted", "rejected")
     .where("group_id", group_id)
@@ -200,15 +200,14 @@ async function deleteToSchedule(scheduleIds: number[]) {
     return await database.from("schedule").whereIn("id", scheduleIds).del()
 }
 
-//
-async function selectUsersInGroup(req: Request, res: Response) {
-    
-}
+
 
 export {
     selectDetailOfEvent,
     insertDetailOfEvent,
     updateEvent,
     deleteEvent,
-    selectEachEventInfo
+    selectEachEventInfo,
+    findGroupsByUser,
+    findUsersByGroup,
 }
