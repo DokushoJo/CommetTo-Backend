@@ -200,10 +200,7 @@ async function deleteToSchedule(scheduleIds: number[]) {
     return await database.from("schedule").whereIn("id", scheduleIds).del()
 }
 
-//
-async function selectUsersInGroup(req: Request, res: Response) {
-    
-}
+
 
 export {
     selectDetailOfEvent,
