@@ -16,6 +16,11 @@ async function handlePostOneEvent(req: Request, res: Response) {
     return updatedIdParis
 }
 
+async function handleMakeGroup(req: Request, res: Response) {
+    const newGroup: group = req.body
+    const updatedGroupList = await insertDetailOfEvent(newEvent)
+}
+
 async function handlePutOneEvent(req: Request, res: Response) {
     const updatedEvent: infoForPageForJSON = req.body //already JSON
     const updatedIdParis = await updateEvent(updatedEvent)
@@ -30,7 +35,7 @@ async function handleDeleteOneEvent(req: Request, res: Response) {
 
 async function handleGetAllEventsInfo(req: Request, res: Response) {
     const userId = req.params.user_id;
-    const eventInfos: eventInfo[] = await selectEachEventInfo(userId);
+    const eventInfos: event[] = await selectEachEventInfo(userId);
     return eventInfos;
 }
 

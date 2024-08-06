@@ -17,6 +17,7 @@ import {
 	handleGetAllEventsInfo,
 	handleFindUsersByGroup,
 	handleFindGroupsByUser,
+	handleMakeGroup,
 } from "./event/event.controller";
 import bcrypt from "bcrypt";
 import jwt, { Secret, JwtPayload } from "jsonwebtoken";
@@ -153,6 +154,11 @@ app.post("/event", auth, async (req: Request, res: Response) => {
 	const result = await handlePostOneEvent(req, res);
 	res.json(result);
 });
+
+app.post("/groups", auth, async (req:Request, res: Response) => {
+	const result = await handleMakeGroup(req, res);
+	res.json(result);
+})
 
 app.put("/event", auth, (req: Request, res: Response) => {
 	const result = handlePutOneEvent(req, res);

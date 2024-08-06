@@ -3,7 +3,7 @@ interface event {
     name?: string
     description?: string,
     date: Date | string,
-    updated_at: Date | string
+    updated_at?: Date | string
 }
 
 

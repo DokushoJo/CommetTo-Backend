@@ -44,7 +44,7 @@ async function selectEachEventInfo(user_id: string) {
     const join: eventInfo[] = await database("event_user")
 			.join("event", "event.id", "=", "event_user.event_id")
 			.where("event_user.user_id", user_id)
-			.select("id", "name", "date");
+			.select("id", "name", "date", "description");
     return join;
 }
 
