@@ -79,6 +79,7 @@ async function insertDetailOfEvent(newEvent: infoForPageForJSON) {
     return eventToSchedule;
 }
 
+
 async function insertToEvent(newEvent: eventForJSON) {
     const casted: event = {
         id: newEvent.id,
@@ -127,6 +128,16 @@ async function insertToEventAndSchedule(eventIdObj: { id: number }[], scheduleId
     }
     return { eventId, scheduleIds }
 }
+
+async function insertNewGroup(newGroup: group) {
+    const insertGroup = await insertToGroup(newGroup)
+    return insertGroup
+}
+
+async function insertToGroup(group:group) {
+    const groupName = await database("groups").insert({"group_name": group.groupName})
+};
+
 
 //Update
 async function updateEvent(updatedEvent: infoForPageForJSON) {
@@ -210,4 +221,5 @@ export {
     selectEachEventInfo,
     findGroupsByUser,
     findUsersByGroup,
+    insertNewGroup
 }

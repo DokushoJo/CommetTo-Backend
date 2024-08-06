@@ -61,7 +61,7 @@ interface registerRequest {
 }
 
 interface group {
-    groupId: number
+    groupId?: number
     users: userInGroup[],
     groupName: string
 }

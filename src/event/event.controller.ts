@@ -1,7 +1,7 @@
 import express, { Express, Request, Response } from "express";
 import dotenv from "dotenv";
-import { event, eventInfo, infoForPage, infoForPageForJSON, group } from "../global";
-import { selectDetailOfEvent, insertDetailOfEvent, updateEvent, deleteEvent, selectEachEventInfo, findGroupsByUser, findUsersByGroup } from "./event.model";
+import { event, eventInfo, group, infoForPage, infoForPageForJSON } from "../global";
+import { selectDetailOfEvent, insertDetailOfEvent, insertNewGroup, updateEvent, deleteEvent, selectEachEventInfo, findGroupsByUser, findUsersByGroup } from "./event.model";
 dotenv.config({ path: './.env.local' });
 
 async function handleGETOneEvent(req: Request, res: Response) {
@@ -18,7 +18,8 @@ async function handlePostOneEvent(req: Request, res: Response) {
 
 async function handleMakeGroup(req: Request, res: Response) {
     const newGroup: group = req.body
-    const updatedGroupList = await insertDetailOfEvent(newEvent)
+    const updatedGroupList = await insertNewGroup(newGroup);
+    return updatedGroupList;
 }
 
 async function handlePutOneEvent(req: Request, res: Response) {
