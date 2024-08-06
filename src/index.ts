@@ -15,6 +15,8 @@ import {
 	handlePutOneEvent,
 	handleDeleteOneEvent,
 	handleGetAllEventsInfo,
+	handleFindGroupsByUser,
+	handleFindUsersByGroup,
 } from "./event/event.controller";
 import bcrypt from "bcrypt";
 import jwt, { Secret, JwtPayload } from "jsonwebtoken";
@@ -158,14 +160,24 @@ app.put("/event", auth, (req: Request, res: Response) => {
 });
 
 app.delete("/event/:id", auth, async (req: Request, res: Response) => {
-	const reuslt = await handleDeleteOneEvent(req, res);
-	res.send();
+	const result = await handleDeleteOneEvent(req, res);
+	res.send(result);
 });
 
 app.get("/all-events/info/:user_id", auth, async (req: Request, res: Response) => {
 	const result = await handleGetAllEventsInfo(req, res);
 	res.json(result);
 });
+
+app.get("/groups/:id", auth, async (req: Request, res: Response) => {
+	const result = await handleFindGroupsByUser(req, res);
+	res.json(result)
+})
+
+app.get("/users/:group_id", auth, async (req: Request, res: Response) => {
+	const result = await handleFindUsersByGroup(req,res);
+	res.json(result)
+})
 
 app.listen(port, () => {
 	console.log(`[server]: Server is running at http://localhost:${port}`);

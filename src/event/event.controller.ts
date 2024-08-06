@@ -1,7 +1,7 @@
 import express, { Express, Request, Response } from "express";
 import dotenv from "dotenv";
-import { event, eventInfo, infoForPage, infoForPageForJSON } from "../global";
-import { selectDetailOfEvent, insertDetailOfEvent, updateEvent, deleteEvent, selectEachEventInfo } from "./event.model";
+import { event, eventInfo, infoForPage, infoForPageForJSON, group } from "../global";
+import { selectDetailOfEvent, insertDetailOfEvent, updateEvent, deleteEvent, selectEachEventInfo, findGroupsByUser, findUsersByGroup } from "./event.model";
 dotenv.config({ path: './.env.local' });
 
 async function handleGETOneEvent(req: Request, res: Response) {
@@ -34,10 +34,24 @@ async function handleGetAllEventsInfo(req: Request, res: Response) {
     return eventInfos;
 }
 
+async function handleFindGroupsByUser(req: Request, res: Response) {
+    const userId = req.params.id;
+    const groupInfo : number[] = await findGroupsByUser(userId);
+    return groupInfo
+}
+
+async function handleFindUsersByGroup(req: Request, res: Response) {
+    const groupId = parseFloat(req.params.group_id);
+    const userInfo : group = await findUsersByGroup(groupId)
+    return userInfo
+}
+
 export {
     handleGETOneEvent,
     handlePostOneEvent,
     handlePutOneEvent,
     handleDeleteOneEvent,
-    handleGetAllEventsInfo
+    handleGetAllEventsInfo,
+    handleFindGroupsByUser,
+    handleFindUsersByGroup
 }
