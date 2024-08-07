@@ -130,13 +130,10 @@ async function insertToEventAndSchedule(eventIdObj: { id: number }[], scheduleId
 }
 
 async function insertNewGroup(newGroup: group) {
-    const insertGroup = await insertToGroup(newGroup)
-    return insertGroup
+    const groupName = await database("groups").insert({"group_name": newGroup.groupName, "description": newGroup.description, "created_by_user_id": newGroup.created_by_user_id})
+    return groupName
 }
 
-async function insertToGroup(group:group) {
-    const groupName = await database("groups").insert({"group_name": group.groupName})
-};
 
 
 //Update
