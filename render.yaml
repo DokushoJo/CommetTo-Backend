@@ -12,7 +12,7 @@ services:
   - type: web
     name: commetto-frontend
     runtime: node
-    repo: https://github.com/FilippoQuattrocchi/CommetTo-Frontend
+    repo: https://github.com/DokushoJo/CommetTo-Frontend
     plan: free
     envVars:
       - key: VITE_APP_BASE_URL
@@ -25,7 +25,7 @@ services:
   - type: web
     name: commetto-backend
     runtime: node
-    repo: https://github.com/FilippoQuattrocchi/CommetTo-Backend
+    repo: https://github.com/DokushoJo/back-end
     plan: free
     envVars:
       - key: DATABASE_URL
