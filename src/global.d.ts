@@ -78,6 +78,7 @@ interface invite {
 
 interface userInGroup {
     id: number
+    username: string
     accepted: boolean
     rejected: boolean
 }

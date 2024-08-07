@@ -57,8 +57,8 @@ async function findGroupsByUser(user_id: string) {
 
 async function findUsersByGroup(group_id: number) : Promise<group>{
     const userObj: userInGroup[] = await database("invitations")
-    .select("user_id", "accepted", "rejected")
-    .where("group_id", group_id)
+    .select("user_id", "accepted", "rejected", "user.username")
+    .where("group_id", group_id).join("user", "user.id", "=", "invitations.user_id")
     const result = await database("groups")
     .select("group_name", "description", "created_by_user_id")
     .where("group_id", group_id)
@@ -77,6 +77,15 @@ async function findInvitations() {
     return invitations
 }
 
+async function getUsersInOneGroup(groupId:number) {
+    const users = await database("invitations").select("user_id", "accepted").where("group_id", groupId)
+    return users
+}
+
+async function getUserNameById(id:number) {
+    const userName = await database("user").select("username").where("id", id)
+    return userName
+}
 
 
 //insert
@@ -238,5 +247,7 @@ export {
     insertNewGroup,
     findGroups,
     insertFirstInvite,
-    findInvitations
+    findInvitations,
+    getUsersInOneGroup,
+    getUserNameById
 }
