@@ -5,6 +5,7 @@ export async function seed(knex: Knex): Promise<void> {
 	//const hashPassword = await bcrypt.hash(userCredential.password, saltRounds);
 	// Deletes ALL existing entries
 	const saltRounds = Number(process.env.SALT || 8);
+	
 	await knex("user").del();
 
 	// Inserts seed entries
