@@ -18,6 +18,7 @@ import {
 	handleFindGroupsByUser,
 	handleFindUsersByGroup,
 	handleMakeGroup,
+	handleFindAllGroups,
 } from "./event/event.controller";
 import bcrypt from "bcrypt";
 import jwt, { Secret, JwtPayload } from "jsonwebtoken";
@@ -182,6 +183,13 @@ app.get("/groups/:id", auth, async (req: Request, res: Response) => {
 
 app.get("/users/:group_id", auth, async (req: Request, res: Response) => {
 	const result = await handleFindUsersByGroup(req,res);
+	res.json(result)
+})
+
+
+//this backend should never be used by users (for testing only)
+app.get("/groups", auth, async (req: Request, res: Response) => {
+	const result = await handleFindAllGroups(req,res);
 	res.json(result)
 })
 

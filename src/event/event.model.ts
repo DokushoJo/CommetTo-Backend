@@ -65,6 +65,12 @@ async function findUsersByGroup(group_id: number) : Promise<group>{
     return {groupId: group_id, users: userObj, groupName: groupName[0]}
 }
 
+async function findGroups() {
+    const groups = await database("groups")
+    .select("group_name")
+    return groups
+}
+
 
 
 //insert
@@ -218,5 +224,6 @@ export {
     selectEachEventInfo,
     findGroupsByUser,
     findUsersByGroup,
-    insertNewGroup
+    insertNewGroup,
+    findGroups,
 }
