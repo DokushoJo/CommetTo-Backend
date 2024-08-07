@@ -9,7 +9,7 @@ databases:
       description: everywhere
     postgresMajorVersion: "14"
 services:
-  - type: web
+  - type: static
     name: commetto-frontend
     runtime: node
     repo: https://github.com/DokushoJo/CommetTo-Frontend
@@ -25,7 +25,7 @@ services:
   - type: web
     name: commetto-backend
     runtime: node
-    repo: https://github.com/DokushoJo/back-end
+    repo: https://github.com/DokushoJo/CommetTo-Backend
     plan: free
     envVars:
       - key: DATABASE_URL

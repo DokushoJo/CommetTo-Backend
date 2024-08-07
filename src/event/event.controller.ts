@@ -24,7 +24,9 @@ async function handleMakeGroup(req: Request, res: Response) {
 
 async function handleMakeInvitation(req:Request, res:Response) {
     const newInvitation: invite = req.body
+    console.log(newInvitation)
     const updatedInvitationList = await insertFirstInvite(newInvitation);
+    console.log(updatedInvitationList)
     return updatedInvitationList
     
 }

@@ -167,7 +167,7 @@ app.post("/groups", auth, async (req:Request, res: Response) => {
 
 app.post("/invitations", auth, async (req: Request, res: Response) => {
 	const result = await handleMakeInvitation(req, res);
-	res.json(result)
+	res.json(result[0])
 })
 
 app.put("/event", auth, (req: Request, res: Response) => {
