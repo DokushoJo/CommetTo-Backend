@@ -19,6 +19,8 @@ import {
 	handleFindUsersByGroup,
 	handleMakeGroup,
 	handleFindAllGroups,
+	handleMakeInvitation,
+	handleGetAllInvitations,
 } from "./event/event.controller";
 import bcrypt from "bcrypt";
 import jwt, { Secret, JwtPayload } from "jsonwebtoken";
@@ -28,7 +30,7 @@ import { loginRequest, registerRequest } from "./global";
 dotenv.config({ path: "./.env.local" });
 
 const app: Express = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3100;
 const corsOptions = {
 	origin: process.env.VITE_ORIGIN,
 };
@@ -158,7 +160,12 @@ app.post("/event", auth, async (req: Request, res: Response) => {
 
 app.post("/groups", auth, async (req:Request, res: Response) => {
 	const result = await handleMakeGroup(req, res);
-	res.json(result);
+	res.json(result[0]);
+})
+
+app.post("/invitations", auth, async (req: Request, res: Response) => {
+	const result = await handleMakeInvitation(req, res);
+	res.json(result)
 })
 
 app.put("/event", auth, (req: Request, res: Response) => {
@@ -182,16 +189,21 @@ app.get("/groups/:id", auth, async (req: Request, res: Response) => {
 })
 
 app.get("/users/:group_id", auth, async (req: Request, res: Response) => {
-	const result = await handleFindUsersByGroup(req,res);
+	const result = await handleFindUsersByGroup(req, res);
 	res.json(result)
 })
 
 
-//this backend should never be used by users (for testing only)
+//(for testing only)
 app.get("/groups", auth, async (req: Request, res: Response) => {
 	const result = await handleFindAllGroups(req,res);
 	res.json(result)
 })
+
+app.get("/invitations", auth, async (req: Request, res: Response) => {
+	const result = await handleGetAllInvitations(req, res);
+	res.json(result);
+});
 
 app.listen(port, () => {
 	console.log(`[server]: Server is running at http://localhost:${port}`);

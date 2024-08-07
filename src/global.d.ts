@@ -68,6 +68,14 @@ interface group {
     created_by_user_id: number
 }
 
+interface invite {
+    group_id: number
+    users: number[]
+    accepted: boolean
+    rejected: boolean
+
+}
+
 interface userInGroup {
     id: number
     accepted: boolean
@@ -86,5 +94,6 @@ export {
 	loginRequest,
 	registerRequest,
     group,
-    userInGroup
+    userInGroup,
+    invite
 };

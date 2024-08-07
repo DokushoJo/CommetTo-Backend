@@ -1,7 +1,7 @@
 import express, { Express, Request, Response } from "express";
 import dotenv from "dotenv";
-import { event, eventInfo, group, infoForPage, infoForPageForJSON } from "../global";
-import { selectDetailOfEvent, findGroups, insertDetailOfEvent, insertNewGroup, updateEvent, deleteEvent, selectEachEventInfo, findGroupsByUser, findUsersByGroup } from "./event.model";
+import { event, eventInfo, group, infoForPage, infoForPageForJSON, invite } from "../global";
+import { selectDetailOfEvent, findGroups, findInvitations, insertFirstInvite, insertDetailOfEvent, insertNewGroup, updateEvent, deleteEvent, selectEachEventInfo, findGroupsByUser, findUsersByGroup } from "./event.model";
 dotenv.config({ path: './.env.local' });
 
 async function handleGETOneEvent(req: Request, res: Response) {
@@ -20,6 +20,13 @@ async function handleMakeGroup(req: Request, res: Response) {
     const newGroup: group = req.body
     const updatedGroupList = await insertNewGroup(newGroup);
     return updatedGroupList;
+}
+
+async function handleMakeInvitation(req:Request, res:Response) {
+    const newInvitation: invite = req.body
+    const updatedInvitationList = await insertFirstInvite(newInvitation);
+    return updatedInvitationList
+    
 }
 
 async function handlePutOneEvent(req: Request, res: Response) {
@@ -57,6 +64,11 @@ async function handleFindAllGroups(req: Request, res: Response) {
     return groups
 }
 
+async function handleGetAllInvitations(req: Request, res: Response) {
+    const groups = await findInvitations()
+    return groups
+}
+
 export {
     handleGETOneEvent,
     handlePostOneEvent,
@@ -67,4 +79,6 @@ export {
     handleFindUsersByGroup,
     handleMakeGroup,
     handleFindAllGroups,
+    handleMakeInvitation,
+    handleGetAllInvitations,
 }

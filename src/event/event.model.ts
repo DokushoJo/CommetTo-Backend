@@ -1,4 +1,4 @@
-import { event, infoForPage, eventInfo, infoForPageForJSON, infoForPageFromKnex, schedule, eventForJSON, scheduleForJSON, group, userInGroup } from "../global";
+import { event, infoForPage, eventInfo, infoForPageForJSON, infoForPageFromKnex, schedule, eventForJSON, scheduleForJSON, group, userInGroup, invite } from "../global";
 import { database } from "../knex";
 
 function castResult(result: infoForPageFromKnex[]) {
@@ -59,16 +59,22 @@ async function findUsersByGroup(group_id: number) : Promise<group>{
     const userObj: userInGroup[] = await database("invitations")
     .select("user_id", "accepted", "rejected")
     .where("group_id", group_id)
-    const groupName: string[] = await database("groups")
-    .select("group_name")
+    const result = await database("groups")
+    .select("group_name", "description", "created_by_user_id")
     .where("group_id", group_id)
-    return {groupId: group_id, users: userObj, groupName: groupName[0]}
+    return { groupId: group_id, users: userObj, groupName: result[0].group_name, description: result[0].description, created_by_user_id: result[0].created_bu_user_id }
 }
 
 async function findGroups() {
     const groups = await database("groups")
     .select("group_name")
     return groups
+}
+
+async function findInvitations() {
+    const invitations = await database("invitations")
+    .select("*")
+    return invitations
 }
 
 
@@ -136,8 +142,13 @@ async function insertToEventAndSchedule(eventIdObj: { id: number }[], scheduleId
 }
 
 async function insertNewGroup(newGroup: group) {
-    const groupName = await database("groups").insert({"group_name": newGroup.groupName, "description": newGroup.description, "created_by_user_id": newGroup.created_by_user_id})
+    const groupName = await database("groups").insert({"group_name": newGroup.groupName, "description": newGroup.description, "created_by_user_id": newGroup.created_by_user_id}).returning(["group_id", "group_name", "created_by_user_id"])
     return groupName
+}
+
+async function insertFirstInvite(invite:invite) {
+    const invitation = await database("invitations").insert({"group_id": invite.group_id, "user_id": invite.users[0], "accepted": invite.accepted, "rejected": invite.rejected}).returning(["group_id", "user_id"])
+    return invitation
 }
 
 
@@ -226,4 +237,6 @@ export {
     findUsersByGroup,
     insertNewGroup,
     findGroups,
+    insertFirstInvite,
+    findInvitations
 }
