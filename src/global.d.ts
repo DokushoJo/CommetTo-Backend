@@ -62,8 +62,10 @@ interface registerRequest {
 
 interface group {
     groupId?: number
-    users: userInGroup[],
+    users?: userInGroup[],
     groupName: string
+    description: string
+    created_by_user_id: number
 }
 
 interface userInGroup {
